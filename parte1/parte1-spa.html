@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Parte 1 - SPA, Angular e Typescript</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/curso.css" />
+    <link rel="stylesheet" href="../css/parte1-node.css" />
+    <link rel="stylesheet" href="../css/console.css" />
+
+    <link rel="stylesheet" href="../css/highlightjs/default.css" />
+    <script src="../js/highlight.pack.js"></script>
+  </head>
+  <body>
+    <h1 class="breadcrumb">Desenvolvimento WEB com Angular e SpringBoot / SPA, Angular e Typescript</h1>
+
+    <main class="conteudo">
+      <article>
+        <header>SPA frameworks</header>
+        <img src="../img/js-frameworks.png" />
+        <p>
+          Um SPA é uma aplicação web que roda em uma única página, oferecendo a mesma experiência de uso de um
+          aplicativo desktop. Um bom exemplo é o Gmail do Google, a navegação na aplicação acontece toda em
+          uma única página e todo o conteúdo é carregado de uma vez ou obtido de forma assíncrona conforme
+          necessário.
+        </p>
+        <ul class="lista-nao-ordenada">
+          <li>Redução de requisições ao servidor</li>
+          <li>Renderização da view inteiramente no browser cliente</li>
+          <li>roteamento e gerenciamento de estado no browser cliente</li>
+          <li>Caching: LocalStorage e SessionStorage</li>
+          <li>Mais uma peça importante para obter escalabilidade</li>
+        </ul>
+      </article>
+      <article>
+        <header>Angular</header>
+        <img src="../img/angular.svg" />
+        <ul class="lista-nao-ordenada">
+          <li>Progressive Web Apps</li>
+          <li>Typescript</li>
+          <li>Independente de qualquer tecnologia de backend</li>
+          <li>Angular CLI</li>
+          <li>Angular material</li>
+          <li>Integração com IDEs</li>
+          <li>i18n</li>
+          <li>RxJS</li>
+          <li>Suporte a profiles</li>
+          <li>HttpClient</li>
+          <li>Arquitetura pré-definida</li>
+          <li>Componentização: módulos, pipes, componentes, serviços, route guards</li>
+          <li>Suporte integrado a testes de integração</li>
+          <li>Fácil integração com Cordova, Ionic ou NativeScript</li>
+        </ul>
+      </article>
+      <article>
+        <header>TypeScript</header>
+        <img src="../img/ts.png" />
+        <p>
+          Superconjunto de JavaScript desenvolvido pela Microsoft que adiciona tipagem e alguns outros
+          recursos a linguagem. Pode ser usada para desenvolver aplicações JavaScript no lado cliente e lado
+          servidor (Node.js). Anders Hejlsberg, arquiteto da linguagem C# e criador das linguagens Delphi e
+          Turbo Pascal, trabalhou no desenvolvimento do TypeScript.
+        </p>
+        <ul class="lista-nao-ordenada">
+          <li>Tipagem estática (opcional): variáveis, parâmetros, retornos de função</li>
+          <li>Checagem de tipo em tempo de compilação</li>
+          <li>Inferência de tipos</li>
+          <li>Interfaces</li>
+          <li>Enums</li>
+          <li>Tipos genéricos</li>
+          <li>Namespaces</li>
+          <li>Tuplas</li>
+          <li>Classes</li>
+          <li>Modules</li>
+          <li>parâmetros opcionais e default</li>
+        </ul>
+      </article>
+      <article>
+        <header>Prática</header>
+        <div class="console">
+          <div class="consolebody">
+            <p>> mkdir pratica-typescript</p>
+            <p>> cd pratica-typescript</p>
+            <p>> npm init -y</p>
+            <p>> npm install -D typescript</p>
+            <p>> npx tsc -w index.ts</p>
+          </div>
+        </div>
+      </article>
+    </main>
+  </body>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</html>

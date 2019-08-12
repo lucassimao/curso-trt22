@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      form,
+      table {
+        margin: 0 auto;
+        width: 600px;
+      }
+
+      table {
+        margin-top: 20px;
+        border-collapse: collapse;
+      }
+
+      table tr th {
+        text-align: left;
+      }
+      table tr td {
+        border: 1px solid black;
+      }
+
+      form input {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <form method="POST">
+      <label>
+        Id:
+        <input name="id" />
+      </label>
+      <label>
+        Nome:
+        <input name="nome" />
+      </label>
+      <input type="submit" value="Cadastrar" />
+    </form>
+
+    <% if (pessoas.length > 0) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nome</th>
+          <th>Remover</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% pessoas.forEach( (pessoa) => { %>
+        <tr>
+          <td>
+            <%= pessoa.id %>
+          </td>
+          <td>
+            <%= pessoa.nome %>
+          </td>
+          <td>
+            <a href="/delete/<%= pessoa.id %>">Remover </a>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    <% } %>
+  </body>
+</html>

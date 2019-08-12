@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Parte 1 - Javascript moderno</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/curso.css" />
+    <link rel="stylesheet" href="../css/parte1-node.css" />
+    <link rel="stylesheet" href="../css/console.css" />
+
+    <link rel="stylesheet" href="../css/highlightjs/default.css" />
+    <script src="../js/highlight.pack.js"></script>
+  </head>
+  <body>
+    <h1 class="breadcrumb">Desenvolvimento WEB com Angular e SpringBoot / JavaScript moderno</h1>
+
+    <main class="conteudo">
+      <article>
+        <header>ES5, ES6, ES8, ES.Next</header>
+        <img src="../img/es.jpeg" />
+        <p>
+          ECMAScript é uma especificação de linguagem de programação baseada em scripts, padronizada pela Ecma
+          International na especificação ECMA-262 e ISO/IEC 16262. A especificação é usada em tecnologias para
+          Internet para a criação de scripts executados no cliente, sendo criada para padronizar a linguagem
+          JavaScript, além de permitir outras implementações independentes.
+        </p>
+      </article>
+      <article>
+        <header>let e const</header>
+        <pre>
+                    <code class="javascript">
+function teste1(a,b){
+    // criando escopo de bloco
+    {
+        var mul = a*b;
+        const soma = a+b;
+        let diferenca = a-b;
+        divisao = a/b;
+    }
+    console.log(`Variáveis com 'var' tem escopo de função: ${mul}`);
+    console.log(typeof soma == 'undefined');
+    console.log(typeof diferenca == 'undefined');
+    console.log('Exemplo de hoisting :' + divisao);
+
+    var divisao;
+}
+                    </code>
+                </pre>
+      </article>
+      <article>
+        <header>Arrow functions</header>
+        <pre>
+                        <code class="javascript">
+// e.g de calculo iterativo do fatorial de n . 
+// Chama o callback com esse valor
+function fatorialIterativo(n,callback){
+    let total = 1;
+    for(let i=n;i>0;--i){
+        total *= i;
+    }
+
+    const res = (typeof i == "undefined") ;
+    console.log(`variável com let aqui é undefined:  ${res}`);
+    callback(n,total);
+}
+
+// return é implícito
+const fatorialRecursivo = (n)=> n == 1 ? 1 : n*fatorialRecursivo(n-1); 
+
+// se houvesse return, deveria ser explícito aqui
+const mostraResultado = (numero,fatorial) =>{
+    const msg = `Fatorial de ${numero} é ${fatorial}`;
+    console.log(msg);
+}
+
+fatorialIterativo(5,mostraResultado);
+console.log(`Fatorial de 10: ${fatorialRecursivo(10)}`)
+                        </code>
+                    </pre>
+      </article>
+      <article>
+        <header>Classes pré ES6</header>
+        <pre>
+                            <code class="javascript">
+// É possível simular herança tb
+// ñ há controle de acesso, encapsulamento 0
+// JS é uma linguagem baseada em protótipos
+
+function Processo(numero,poloAtivo,poloPassivo){
+    this.numero = numero;
+    this.poloAtivo = poloAtivo;
+    this.poloPassivo = poloPassivo;
+}
+
+Processo.prototype.tramitar = function(tarefa){
+    this.tarefa = tarefa;
+}
+
+Processo.prototype.mandarParaAnaliseDoCohecimento = function(){
+    this.tramitar('Análise do Conhecimento');
+}
+
+Processo.prototype.mandarParaPrepararComunicação = function(){
+    this.tramitar('Preparar comunicação');
+}
+
+const p1 = new Processo('11111-22.2019.5.22.0001',
+                        'Joao 123','Maria 123');
+p1.mandarParaAnaliseDoCohecimento();
+console.log(`Processo ${p1.numero} na tarefa ${p1.tarefa}`);
+
+p1.mandarParaPrepararComunicação();
+console.log(`Processo ${p1.numero} na tarefa ${p1.tarefa}`);
+
+
+                            </code>
+                        </pre>
+      </article>
+
+      <article>
+        <header>Classes no ES6 - herança</header>
+        <pre>
+                                <code class="javascript">
+//puro açúcar sintático
+class Processo{
+    constructor(numero){
+        this.numero = numero;
+        this.tarefa = 'Triagem Inicial';
+    }
+
+    static exibirResumo(objeto){
+        console.log(`Tarefa ${objeto.tarefa}`)
+    }  
+
+    tramitar(tarefa){
+        this.tarefa = tarefa;
+    }
+
+    mandarParaAnaliseDoCohecimento(){
+        this.tramitar('Análise do Conhecimento');
+    }
+
+    mandarParaPrepararComunicação(){
+        this.tramitar('Preparar comunicação');
+    }    
+}
+
+class ProcessoTRF extends Processo{
+
+    constructor(numero,poloAtivo,poloPassivo){
+        super(numero);
+        this.poloAtivo = poloAtivo;
+        this.poloPassivo = poloPassivo;
+    }
+
+    static exibirResumo(objeto){
+        console.log(`Processo ${objeto.numero}`)
+        console.log(`Polo ativo ${objeto.poloAtivo}`)
+        console.log(`Polo passivo ${objeto.poloPassivo}`)
+        Processo.exibirResumo(objeto);
+    }    
+}
+    
+const p1 = new ProcessoTRF('11111-22.2019.5.22.0001',
+                        'Joao 123','Maria 123');
+p1.mandarParaAnaliseDoCohecimento();
+console.log(`Processo ${p1.numero} na tarefa ${p1.tarefa}`);
+
+p1.mandarParaPrepararComunicação();
+console.log(`Processo ${p1.numero} na tarefa ${p1.tarefa}`);
+
+ProcessoTRF.exibirResumo(p1);
+    
+                                </code>
+                            </pre>
+      </article>
+
+      <article>
+        <header>Classes no ES6 - get e set</header>
+        <pre>
+            <code class="javascript">
+// temos aqui algum nível de encapsulamento
+class Pessoa{
+    constructor(nome,idade){
+        this._nome = nome;
+        this._idade = idade;
+    }
+
+    set idadePeloAnoDeNascimento(ano){
+        const anoAtual = new Date().getFullYear();
+        this._idade = anoAtual - ano;
+    } 
+
+    get idade(){
+        return this._idade;
+    }
+} 
+
+const p2 = new Pessoa('Joao',25);
+p2.idadePeloAnoDeNascimento = 1990;
+console.log(p2.idade == 29);
+            </code>
+        </pre>
+      </article>
+      <article>
+        <header>Parâmetros default</header>
+        <pre>
+                <code class="javascript">
+function padraoCNJ(numero,digito,ano,vara,justica=5,regional=22){
+    const numeroFormatado = String(numero).padStart(7,'0')
+                                + '-'
+                                + String(digito).padStart(2,'0') + '.'
+                                + ano + '.'
+                                + justica + '.'
+                                + regional + '.'
+                                + String(vara).padStart(4,'0');
+    return numeroFormatado;
+}
+console.log(padraoCNJ(1477,87,2015,4))
+                </code>
+            </pre>
+      </article>
+      <article>
+        <header>Template strings</header>
+        <pre>
+                    <code class="javascript">
+const padraoCNJ = (numero, digito, ano, vara, justica=5, regional=22) =>{
+    const sufixo = `.${ano}.${justica}.${regional}.${String(vara).padStart(4,'0')}`;
+    const prefixo = `${String(numero).padStart(7,'0')}-${String(digito).padStart(2,'0')}`;
+    return `${prefixo}-${sufixo}`;
+}
+console.log(padraoCNJ(1477,87,2015,4))
+                    </code>
+                </pre>
+      </article>
+      <article>
+        <header>Object literal</header>
+        <pre>
+                                <code class="javascript">
+    const numero = 12345, digito = 67, ano = 2019, 
+          justica = 5, regional =22, vara = 4;
+    
+    // jeito antigo
+    const p1 = {
+        numero: numero,
+        digito: digito,
+        ano: ano,
+        justica: justica,
+        regional: regional,
+        vara: vara
+    }
+    // declaração aprimorada
+    const p2  = {numero, digito, ano, justica, regional, vara};
+                                </code>
+                            </pre>
+      </article>
+      <article>
+        <header>Spread operator</header>
+        <pre>
+                            <code class="javascript">
+const fibo =  [1,1,2,3,5,8];
+const fibo2 = [ ...fibo, 13, 21, 34];
+
+
+console.log(fibo2);
+
+
+const numero = 12345, digito = 67, ano = 2019, 
+                justica = 5, regional =22, vara = 4;
+
+const p1  = {numero, digito}
+const p2 = {ano, justica, regional, vara};
+const p3 = { ...p1, ...p2};
+console.log(p3);
+
+                            </code>
+                        </pre>
+      </article>
+      <article>
+        <header>Destructuring assignments</header>
+        <pre>
+                        <code class="javascript">
+
+const fibo =  [1,1,2,3,5,8,13,21,34];
+const [n0, ,n2, ,n4] = fibo;
+
+// obtendo itens do array
+console.log(n0);
+console.log(n2);
+console.log(n4);
+
+// extraindo dados de um objeto
+const respostaHttp = {
+    status: 200,
+    headers: {
+        contentType : 'application/json'
+    },
+    body : {
+        id: 100,  poloAtivo: 'Fulano de tal',
+        advogados : ['Adv1','Adv2','Adv3']
+    }
+}
+const {status, body : { 
+    poloAtivo : nome, advogados : [, ,adv3]
+    }
+} = respostaHttp;
+
+if (status === 200){
+    console.log(`Dados de ${nome} obtidos com sucesso`);
+    console.log('3º advogado:  ' + adv3);
+}
+                        </code>
+                    </pre>
+      </article>
+
+      <article>
+        <header>ES Modules</header>
+        <img src="../img/modules.png" />
+        <p>
+          calculadora.mjs (ES module)
+        </p>
+        <pre>
+                            <code class="javascript">
+let contador = 0;
+
+function somar(a,b){
+    console.log(`${contador++} operações realizadas`);
+    return a+b;
+}
+function multiplicar(a,b){
+    console.log(`${contador++} operações realizadas`);
+    return a*b;
+}
+
+// funções somar e multiplicar encapsuladas
+// exportando apenas a função calculadora
+export default function calculadora(operacao,a,b){
+    switch(operacao){
+        case '+':
+            return somar(a,b);
+        case '*':
+            return  multiplicar(a,b);
+    }
+}
+                                    
+                            </code>
+                        </pre>
+        <p>usarCalculadora.mjs</p>
+        <pre>
+                                <code class="javascript">
+import calculadora from './calculadora.mjs';
+
+console.log("99 + 1" + calculadora('+',99,1));
+console.log("4*50 " + calculadora('*',4,50));
+                                    </code>
+                        </pre>
+                        <div class="console">
+                                <div class="consolebody">
+                                  <p>> node --experimental-modules usarCalculadora.mjs</p>
+                                </div>
+                              </div>                        
+      </article>
+      <article>
+        <header>Promises</header>
+        <img src="../img/js-promise.png" />
+        <pre>
+            <code class="javascript">
+var http = require("http");
+
+function fibonacci(n) {
+    return n < 2 ? n : fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+var server = http.createServer();
+server.on("request", (req, resp) => {
+
+    try {
+        if (!req.url.startsWith("/fibonacci") || req.method != "GET")
+            throw "Apenas GET /fibonacci?numero= é aceito";
+
+        const url = require("url").parse(req.url, true);
+        const numero = parseInt(url.query.numero);
+
+        if (numero > 45)
+            throw 'Apenas numeros <= 45 são aceitos';
+    
+        console.log(`Calculando ${numero}º fibonacci ...`);
+        const fibo = fibonacci(numero);
+        resp.end(String(fibo));
+        console.log(`${numero}º fibonacci = ${fibo}`);
+
+    } catch (msg) {
+        resp.writeHead(400, { "Content-Type": "application/text" });
+        resp.end(msg);
+    }
+})
+
+server.listen(8080);
+
+</code>
+</pre>
+ client.js
+<pre>
+        <code class="javascript">
+var http = require("http");
+
+// recebe por parâmetro o numero a calcular
+function fibonacciRemoto(numero) {
+    return new Promise((resolve, reject) => {
+    const url = "http://localhost:8080/fibonacci?numero=" + process.argv[2];
+
+    http.get(url, res => {
+        res.once("data", chunk => {
+            res.statusCode == 200 ? resolve(String(chunk)) : reject(chunk)
+        });
+        })
+        .on("error", e => {
+            reject("Erro " + e.message);
+        });
+    });
+}
+
+console.log('Antes da chamada ... ');
+
+fibonacciRemoto(43)
+    .then(valor => console.log("Valor: " + valor))
+    .catch(erro => console.error("Erro ao computar valor: " + erro));
+
+    console.log('Depois da chamada ... ');
+            </code>
+                            </pre>
+      </article>
+
+      <article>
+        <header>Prática</header>
+        <ul>
+          <li>
+            <div class="console">
+              <div class="consolebody">
+                <p>> mkdir node-express</p>
+                <p>> cd node-express</p>
+                <p>> npm init -y</p>
+                <p>> npm install express ejs</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <pre>
+                    <code class="javascript">
+// arquivo index.js
+const express = require("express");
+
+const app = express();
+const db = [];
+
+app.use(express.urlencoded({ extended: true }));
+app.set("views", "./views");
+app.set("view engine", "html");
+app.engine("html", require("ejs").renderFile);
+
+app.post("/", function(req, res, next) {
+    const { id, nome } = req.body;
+    db.push({ id, nome });
+    next();
+});
+
+app.get("/delete/:id", (req, res) => {
+    const indice = db.findIndex(pessoa => pessoa.id == req.params.id);
+    if (indice !== -1) {
+        db.splice(indice, 1);
+    }
+    res.redirect("/");
+});
+
+app.use((req, res) => res.render("index", { pessoas: db }));
+app.listen(3000);
+                            
+                    </code>
+                </pre>
+          </li>
+          <li>
+            <pre>
+                        <code class="html">
+// arquivo index.html, dentro da pasta views                           
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+    &lt;style&gt;
+        form,
+        table {
+        margin: 0 auto;
+        width: 600px;
+        }
+
+        table {
+        margin-top: 20px;
+        border-collapse: collapse;
+        }
+
+        table tr th {
+        text-align: left;
+        }
+        table tr td {
+        border: 1px solid black;
+        }
+
+        form input {
+        display: inline-block;
+        }
+    &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;form method="POST"&gt;
+        &lt;label&gt;
+        Id:
+        &lt;input name="id" /&gt;
+        &lt;/label&gt;
+        &lt;label&gt;
+        Nome:
+        &lt;input name="nome" /&gt;
+        &lt;/label&gt;
+        &lt;input type="submit" value="Cadastrar" /&gt;
+    &lt;/form&gt;
+
+    &lt;% if (pessoas.length &gt; 0) { %&gt;
+    &lt;table&gt;
+        &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Id&lt;/th&gt;
+            &lt;th&gt;Nome&lt;/th&gt;
+            &lt;th&gt;Remover&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+        &lt;% pessoas.forEach( (pessoa) =&gt; { %&gt;
+        &lt;tr&gt;
+            &lt;td&gt;
+            &lt;%= pessoa.id %&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+            &lt;%= pessoa.nome %&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+            &lt;a href="/delete/&lt;%= pessoa.id %&gt;"&gt;Remover &lt;/a&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;% }); %&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+    &lt;% } %&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+                        </code>
+                            </pre>
+          </li>
+          <li>
+            <div class="console">
+              <div class="consolebody">
+                <p>> node index.js</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </article>
+    </main>
+  </body>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</html>

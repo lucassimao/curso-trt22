@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Parte 1 - JWT  e Keycloak</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/curso.css" />
+    <link rel="stylesheet" href="../css/parte1-node.css" />
+    <link rel="stylesheet" href="../css/console.css" />
+
+    <link rel="stylesheet" href="../css/highlightjs/default.css" />
+    <script src="../js/highlight.pack.js"></script>
+  </head>
+  <body>
+    <h1 class="breadcrumb">Desenvolvimento WEB com Angular e SpringBoot / JWT e keycloak</h1>
+
+    <main class="conteudo">
+      <article>
+        <header>JWT - JSON Web Token</header>
+        <img src="../img/jwt.png" />
+        <p>
+          Padrão para criação de tokens que asseguram acesso a recursos remotos.
+
+          Para garantir integridade, tokens JWT podem ser assinados digitalmente, por exemplo com o algoritmo HMAC, 
+          ou um par de chaves pública/privada usando RSA.
+
+          Utilizado atualmente no contexto de aplicações SPA, onde o backend não gerencia
+          nenhuma sessão do usuário e quando diferentes backends atendem 
+          diferentes clientes, extraindo informações sobre o requisitante através do token
+
+          Não propõe confidencialidade ou criptografia de dados, apenas descreve uma maneira escalável 
+          de autenticar requisições. 
+        </p>
+      </article>
+      <article>
+        <header>Fluxo</header>
+        <img src="../img/jwt-fluxo.jpg" />
+
+        </article>
+
+        <article>
+            <header>Estrutura</header>
+            <img src="../img/estrutura.png" />
+    
+            </article>
+
+            <article>
+                <header>Keycloak</header>
+                <img src="../img/keycloak.png" />
+
+                <p>
+                    Solução open source de gerenciamento de acesso e
+                     identidade voltada para aplicações e serviços modernos distribuídos.
+                      Facilita a configuração de segurança de aplicativos e serviços com pouco ou nenhum código
+                </p>
+                <ul class="lista-nao-ordenada">
+                    <li>
+                        Single-Sign On: Possibilita que o usuário faça login apenas uma vez, e depois acesse todos os sistemas que estejam configurados no Keycloak. O Keycloak também prove a tela de login, e uma maneira facil de configurar o armazenamento e cadastramento de novos usuários em um banco de dados. Também é possível fazer logout, de uma maneira bem simples.
+
+                    </li>
+                    <li>
+                      Integração com credenciais de redes sociais
+                    </li>
+                    <li>
+                      Pronto p/ escalar horizontalmente (clustering)
+                    </li>
+                    <li>
+                        Integração com LDAP e Active Directory (funcionando na rede do TRT22)
+                    </li>
+                    <li>
+                      Suporta os protocolos JWT, OpenID Connect, OAuth 2.0, SAML.
+                    </li>
+                    <li>
+                      Painel administrativo web 
+                    </li>
+                </ul>
+                </article>
+                <article>
+                  <header>
+                    Prática
+                  </header>
+
+                  <div class="console">
+                      <div class="consolebody">
+                        <p>> curl -v -H "content-type: application/x-www-form-urlencoded" -d 'grant_type=password&client_id=trt22-demo-backend&username=lucas.simao&password=123456' http://keycloak.trt22.jus.br:8080/auth/realms/trt22/protocol/openid-connect/token </p>
+                      </div>
+                    </div>
+                </article>
+
+
+                <article>
+                    <header>jwt.io</header>
+                    <img src="../img/wstru.png" />
+
+                    </article>
+    </main>
+  </body>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</html>

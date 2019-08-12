@@ -1,0 +1,52 @@
+version: "3"
+volumes:
+  db-data:
+services:
+  http:
+    image: nginx:1.17.2
+    ports: 
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on: 
+      - tomcat1
+      - tomcat2
+  tomcat1:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: demo-tomcat1
+    environment:
+      DB_ADDR: mysql
+      CRIAR_DB: ok
+      DB_PORT: 3306
+      DB_USER: app
+      DB_PASSWORD: 123
+      DB_DATABASE: demo-spring-mvc
+    depends_on: 
+      - mysql
+  tomcat2:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: demo-tomcat2
+    environment:
+      DB_ADDR: mysql
+      DB_PORT: 3306
+      DB_USER: app
+      DB_PASSWORD: 123
+      DB_DATABASE: demo-spring-mvc
+    depends_on: 
+      - mysql      
+  mysql:
+    environment:
+      - MYSQL_USER=app
+      - MYSQL_PASSWORD=123
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=demo-spring-mvc
+    container_name: demo-mysql
+    image: mysql:5.7.26
+    volumes:
+      - db-data:/var/lib/mysql:rw
+
+

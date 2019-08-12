@@ -1,0 +1,20 @@
+.console {
+  font-family: "Fira Mono";
+  box-sizing: border-box;
+}
+
+.console .consolebody {
+  border-radius: 15px;
+  box-sizing: border-box;
+  padding: 20px;
+  height: calc(100% - 40px);
+  /* overflow: scroll; */
+  background-color: #000;
+  color: #63de00;
+
+}
+
+.console .consolebody p {
+  line-height: 1.5rem;
+  text-indent: 0;
+}

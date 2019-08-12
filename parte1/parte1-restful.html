@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Parte 1 - Arquitetura resf</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/curso.css" />
+    <link rel="stylesheet" href="../css/parte1-node.css" />
+    <link rel="stylesheet" href="../css/console.css" />
+
+    <link rel="stylesheet" href="../css/highlightjs/default.css" />
+    <script src="../js/highlight.pack.js"></script>
+  </head>
+  <body>
+    <h1 class="breadcrumb">Desenvolvimento WEB com Angular e SpringBoot / Arquitetura Rest</h1>
+
+    <main class="conteudo">
+      <article>
+        <header>Arquitetura rest</header>
+        <img src="../img/restful.png" />
+        <p>
+            Estilo arquitetural sobre um sistema operado em rede. 
+            REST é um acrônimo para "Transferência de Estado Representacional" (Representational State Transfer).
+            Cada aplicação web é vista como um conjunto de recursos, 
+            que representam um estado particular de um aplicativo. 
+            Quando você acessa este recurso, 
+            você está transferindo o estado (conteúdo), e talvez alterando o seu estado.
+            REST não é um padrão, não é um protocolo e sim uma arquitetura.
+        </p>
+        <ul class="lista-nao-ordenada">
+            <li>Os recursos individuais são identificados na requisição, sendo descritos pela URI</li>
+            <li>Recursos podem responder a várias ações, iniciadas através dos métodos http</li>
+            <li>POST - Cria um recurso</li>
+            <li>PUT - Cria ou atualiza o conteúdo do recurso</li>
+            <li>GET - Busca o conteúdo do recurso</li>
+            <li>DELETE - Apaga o conteúdo do recurso</li>
+            <li>
+                São utilizados MIME TYPES para identificar que tipo de conteúdo esta sendo negociado. 
+                A identificação geralmente é feita no cabeçalho pelo campo cujo o nome é Content-type.
+            </li>
+            <li>Todo recurso inclui a informação do formato referente ao conteúdo. JSON, XML , YAML etc  </li>
+            <li>Stateless - Será enviada toda informação necessaria para o entendimento da requisição e não há nenhum contexto armazenado no servidor </li>
+            <li>Cache no cliente (localStorage, sessionStorage) - Eliminar parcialmente as interações, melhorando a eficiência, escalabilidade e desempenho pelo usuário.</li>
+            <li>
+                    Hypermedia – Informações necessárias na resposta para que cliente saiba navegar e ter acesso a
+                     todos os resources da aplicação. 
+            </li>
+            <li>
+                    HATEOAS (Hypertext As The Engine Of Application State) - API fornece
+                     para o cliente toda a informação necessária para interagir com a aplicação.
+            </li>
+        </ul>
+      </article>
+      <article>
+          <header>PJE</header>
+          <img src="../img/PropostaArquitetural_PJe2.png" />
+      </article>     
+      <article>
+          <header>PJE - API restful</header>
+          <img src="../img/recursos-pje.png" />
+      </article>     
+      <article>
+          <header>PJE - tecnologias</header>
+          <img src="../img/PilhaTecnologias_PJe2.png" />
+      </article>        
+      <article>
+            <header>Prática Node.js</header>
+            <div class="console">
+              <div class="consolebody">
+                <p>> mkdir pratica-rest</p>
+                <p>> cd pratica-rest</p>
+                <p>> npm init -y</p>
+                <p>> npm install express</p>
+              </div>
+            </div>
+            <pre>
+                    <code class="javascript">
+const express = require("express");
+const Processo = require("./processo");
+
+const processos = [];
+
+const processoRoute = express.Router();
+processoRoute.get("/", (req, res) => {
+    res.json(processos);
+});
+
+processoRoute.get("/:id", (req, res) => {
+    const processo = processos.find(p => p.id === id);
+    if (processo) {
+    res.json(processos);
+    } else {
+    res.status(404).end();
+    }
+});
+
+processoRoute.post("/", (req, res) => {
+    const { numero, advogado } = req.body;
+    const processo = new Processo(null, numero, advogado);
+    processo.id = processos.length + 1;
+    processos.push(processo);
+    res.location("/processos/" + processo.id);
+    res.status(201).end();
+});
+
+processoRoute.put("/:id", (req, res) => {
+    const { numero, advogado } = req.body;
+    const id = +req.params.id;
+    const processo = processos.find(p => p.id === id);
+    if (processo) {
+    if (numero != null) {
+        processo.numero = numero;
+    }
+    if (advogado != null) {
+        processo.advogado = advogado;
+    }
+    res.status(201).end();
+    } else {
+    res.status(404).end();
+    }
+});
+
+processoRoute.delete("/:id", (req, res) => {
+    const id = +req.params.id;
+    const index = processos.findIndex(p => p.id === id);
+    if (index !== -1) {
+    processos.splice(index, 1);
+    res.status(200).end();
+    } else {
+    res.status(404).end();
+    }
+});
+
+const app = express();
+
+app.use(express.json());
+app.use("/processos", processoRoute);
+app.listen(3000);
+                    </code>
+                </pre>            
+          </article>     
+          
+          <article>
+            <header>Prática Java</header>
+            <div class="console">
+              <div class="consolebody">
+                   
+                <p>> mvn archetype:generate -DgroupId=br.jus.trt22 -DartifactId=pratica-rest-java -DarchetypeArtifactId=maven-archetype-quickstart </p>
+                <p>> cd pratica-rest-java</p>
+              </div>
+            </div>
+            <ul class="lista-nao-ordenada">
+              <li> <a target="_blank" href="../01/pratica-restful-java/pom.xml">pom.xml</a></li>
+              <li> <a target="_blank" href="../01/pratica-restful-java/src/main/java/br/jus/trt22/App.java">src/main/java/br/jus/trt22/App.java</a> </li>
+              <li> <a target="_blank" href="../01/pratica-restful-java/src/main/java/br/jus/trt22/Processo.java">src/main/java/br/jus/trt22/Processo.java</a> </li>
+              <li> <a target="_blank" href="../01/pratica-restful-java/src/main/java/br/jus/trt22/ProcessosApi.java">src/main/java/br/jus/trt22/ProcessoApi.java</a> </li>
+              <li> <a target="_blank" href="../01/pratica-restful-java/src/main/resources/META-INF/persistence.xml">src/main/resources/META-INF/persistence.xml</a> </li>
+              <li> <a target="_blank" href="../01/pratica-restful-java/src/main/java/br/jus/trt22/jpa/ProcessosJPAApi.java">src/main/java/br/jus/trt22/jpa/ProcessosJPAApi.java</a> </li>
+            
+            </ul>
+            <div class="console">
+                <div class="consolebody">
+                  <p>> mvn clean compile exec:java -Dexec.mainClass="br.jus.trt22.App"</p>
+                </div>
+              </div>
+            </article>          
+  </body>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Parte 1 - Node / npm</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/curso.css" />
+    <link rel="stylesheet" href="../css/parte1-node.css" />
+    <link rel="stylesheet" href="../css/console.css" />
+
+    <link rel="stylesheet" href="../css/highlightjs/default.css" />
+    <script src="../js/highlight.pack.js"></script>
+  </head>
+  <body>
+    <h1 class="breadcrumb">Desenvolvimento WEB com Angular e SpringBoot / Node e npm</h1>
+
+    <main class="conteudo">
+      <article>
+        <header>Node.js</header>
+        <img src="../img/node.svg" />
+        <p>
+          Node.js é um interpretador open source de código JavaScript de modo assíncrono e orientado a
+          eventos, focado em migrar a programação do Javascript do lado do cliente para os servidores, criando
+          assim aplicações de alta escalabilidade, capazes de manipular milhares de conexões/requisições
+          simultâneas em tempo real, numa única máquina física.
+        </p>
+        <p>
+          O Node.js é baseado no interpretador V8 JavaScript Engine (interpretador de JavaScript open source
+          implementado pelo Google em C++ e utilizado pelo Chrome)
+        </p>
+        <ul class="lista-nao-ordenada">
+          <li>Javascript no cliente e no servidor</li>
+          <li>Criação de aplicações distribuídas com diferentes protocolos (socket, udp, http, http2 ...) </li>
+          <li>Rico repositório de pacotes reutilizáveis (NPM)</li>
+          <li>Otimizações que equiparam sua velocidade a de linguagens 
+            <a target="_blank" href="https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/javascript.html"> já consagradas</a> </li>
+          <li>
+            Single-threaded, orientado a eventos, callbacks para operações de I/O -  
+            atinge um nível de escalabilidade que o permite gerenciar eficientemente centenas de milhares de 
+            conexões simultâneas.
+          </li>
+          <li>Melhor cenários: aplicações que fazem bastante uso de I/O </li>
+          <li>Ñ recomendado: aplicações que fazem uso significativo da CPU</li>
+        </ul>
+      </article>
+
+      <article>
+        <header>Npm</header>
+        <img src="../img/Npm-logo.svg" />
+
+        <p>
+          Npm é um gerenciador de pacotes para a linguagem JavaScript. É o gerenciador de pacotes padrão para
+          o Node.js. Contém um executável de linha de comando (npm) que acessa o site
+          <a target="_blank" href="https://www.npmjs.com/">https://www.npmjs.com/</a> que é um repositório
+          online de pacotes publicos e privados.
+        </p>
+      </article>
+
+      <article>
+        <header>Prática</header>
+        <ul>
+          <li>Instalar VSCode</li>
+          <li>Instalar Node</li>
+          <li>
+            <div class="console">
+              <div class="consolebody">
+                <p>> mkdir pratica-nodejs</p>
+                <p>> npm init -y</p>
+                <p>> code index.js</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <pre>
+                <code class="javascript">
+var http = require("http");
+
+http.createServer(function(req, res) {
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end("&lt;h1> Teste servidor http OK &lt;/h1>");
+}).listen(8080);
+                </code>
+            </pre>
+          </li>
+          <li>
+            <div class="console">
+              <div class="consolebody">
+                <p>> node index.js</p>
+              </div>
+            </div>
+          </li>
+          <li>Pode-se alterar o package.json para incluir o entrypoint do programa</li>
+        </ul>
+      </article>
+    </main>
+  </body>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</html>

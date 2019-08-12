@@ -1,0 +1,39 @@
+.conteudo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.conteudo header {
+  font-weight: bold;
+  font-size: 2.5em;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.conteudo img {
+  max-width: 100%;
+  display: block;
+  margin: auto;
+  margin-bottom: 50px;
+}
+
+.conteudo article {
+  flex-basis: 500px;
+  background-color: #edf7f6;
+  border-radius: 20px;
+  padding: 20px;
+  line-height: 1.5em;
+  width: 600px;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+
+}
+
+.conteudo article p {
+  text-indent: 2em;
+  text-align: justify;
+}
+
+
