@@ -14,8 +14,8 @@ processo.adicionarDocumento('<h1> Petição inicial</h1>');
 processo.adicionarDocumento([1, 0, 0, 1, 1, 1, 10, 1, 1, 1, 1, 1, 1]); // simulando pdf
 // processo.adicionarDocumento(true); // ñ aceita o tipo booleano
 new services_1.RemessaSegundoGrauService().remeter([processo]);
-// const pessoa = new Dominio.Pessoa(1, "Pessoa 1"); //ñ permitido, pessao é privado do namespace
-// pessoa.tipo = 'Fisica'; // ñ funciona
+var pessoa = new dominio_1["default"].Pessoa(1, "Pessoa 1"); //ñ permitido, pessao é privado do namespace
+pessoa.tipo = 'Fisica'; // ñ funciona
 // processoDao.salvar(pessoa); // ñ funciona
 // pessoa.tipo = Dominio.TipoPessoa.Fisica; // ñ permitido, TipoPessoa é privado
 // processo.fase = Dominio.FaseProcesso.AnaliseDoConhecimento; ~n permitido, fase é privado

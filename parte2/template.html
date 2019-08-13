@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Parte 1 - SPA, Angular e Typescript</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/curso.css" />
+    <link rel="stylesheet" href="../css/parte1-node.css" />
+    <link rel="stylesheet" href="../css/console.css" />
+
+    <link rel="stylesheet" href="../css/highlightjs/default.css" />
+    <script src="../js/highlight.pack.js"></script>
+  </head>
+  <body>
+    <h1 class="breadcrumb">Desenvolvimento WEB com Angular e SpringBoot / Spring framework</h1>
+
+    <main class="conteudo">
+      <article>
+        <header>Spring Framework</header>
+        <img src="../img/spring.png" />
+        <p>
+            É o framework open source mais popular para aplicações Java criado como resposta a complexidade envolvida na criação
+            de aplicações corporativas durante as primeiras versões do J2EE.
+        </p>
+      </article>
+      <article>
+          <header>Sub-projetos</header>
+          <img src="../img/spring-overview.png" />
+          <p>
+              Pode ser visto como um conjunto de módulos(sub-projetos) para os mais variados serviços, dentre os mais relevantes:
+          </p>
+          <ul class="lista-nao-ordenada">
+              <li>Spring Core Container </li>
+              <li>Programação orientada a aspectos</li>
+              <li>Autenticação e autorização - via Spring Security)</li>
+              <li>Acesso a dados de bancos relacionais (JDBC) e não relacionais</li>
+              <li>Container de inversão de controle e injeção de dependência</li>
+              <li>Messageria  via Java Message Service (JMS)</li>
+              <li>Spring MVC: Uma abstração das apis de Servlet </li>
+              <li>Gerenciamento de transação </li>
+              <li>Gerenciamento remoto - abstrai JMX</li>
+              <li>Teste - módulo com classes utilitárias para escrever testes unitários e de integração</li>
+          </ul>
+        </article>      
+        <article>
+            <header>Spring MVC</header>
+            <img src="../img/Spring-MVC.png" />
+            <p>
+                Framework para desenvolvimento de aplicações WEB, baseado no modelo de requisição e resposta HTTP
+            </p>
+          </article>   
+          
+          <article>
+            <header>Prática</header>
+            <div class="console">
+              <div class="consolebody">
+                   
+                <p>> mvn archetype:generate -DgroupId=br.jus.trt22 -DartifactId=pratica-spring-mvc -DarchetypeArtifactId=maven-archetype-quickstart </p>
+                <p>> cd pratica-spring-mvc</p>
+              </div>
+            </div>
+            <ul class="lista-nao-ordenada">
+              <li> <a target="_blank" href="../01/pratica-spring-mvc/pom.xml">pom.xml</a> </li>
+              <li> <a target="_blank" href="../01/pratica-spring-mvc/src/main/java/br/jus/trt22/WebConfig.java">src/main/java/br/jus/trt22/WebConfig.java</a></li>
+              <li> <a target="_blank" href="../01/pratica-spring-mvc/src/main/java/br/jus/trt22/JpaConfig.java">src/main/java/br/jus/trt22/JpaConfig.java</a></li>
+              <li> <a target="_blank" href="../01/pratica-spring-mvc/src/main/java/br/jus/trt22/App.java">src/main/java/br/jus/trt22/App.java</a></li>
+              <li> <a target="_blank" href="../01/pratica-spring-mvc/src/main/java/br/jus/trt22/Advogado.java">src/main/java/br/jus/trt22/Advogado.java</a></li>
+              <li> <a target="_blank" href="../01/pratica-spring-mvc/src/main/java/br/jus/trt22/AdvogadoRepository.java">src/main/java/br/jus/trt22/AdvogadoRepository.java</a></li>
+              <li> <a target="_blank" href="../01/pratica-spring-mvc/src/main/java/br/jus/trt22/AdvogadoController.java">src/main/java/br/jus/trt22/AdvogadoController.java</a></li>
+            
+            </ul>
+            <div class="console">
+                <div class="consolebody">
+                  <p>> mvn clean package </p>
+                  <p>> cp target/pratica-spring-mvc-1.0-SNAPSHOT.war apache-tomcat-9.0.22/webapps/ROOT.war  </p>
+                  <p>> ./apache-tomcat-9.0.22/bin/startup.sh </p>
+                </div>
+              </div>
+            </article>         
+
+    </main>
+  </body>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</html>
