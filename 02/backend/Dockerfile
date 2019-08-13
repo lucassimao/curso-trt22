@@ -25,7 +25,7 @@ ENV SPRING_DATASOURCE_PASSWORD $DB_PASSWORD
 # ENV KEYSTORE_ALIAS $KEYSTORE_ALIAS
 
 COPY target/demo-backend.jar /home/demo-backend.jar
-COPY wait-for-it.sh /home
+# COPY wait-for-it.sh /home
 EXPOSE 8080
 
-CMD ["/home/wait-for-it.sh", "$DATABASE_IP:$DATABASE_PORT","-t","5","--", "java", "-jar", "/home/demo-backend.jar"]
+CMD ["java", "-jar", "/home/demo-backend.jar"]

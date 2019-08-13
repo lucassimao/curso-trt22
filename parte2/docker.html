@@ -20,7 +20,17 @@
           <header>Container</header>
           <div class="console">
               <div class="consolebody">
-                <p>></p>
+                <p>> docker run -d --name mysql1 -e MYSQL_DATABASE=teste -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123 -d mysql:8.0.16</p>
+                <p>
+
+                </p>
+                <p>
+                  >docker build --build-arg DB_IP=mysql1 --build-arg DB_PORT=3306 --build-arg DB_NAME=teste --build-arg DATABASE_TYPE=mysql --build-arg DB_USERNAME=root --build-arg DB_PASSWORD=123 -t backend-curso .
+                </p>
+
+                <p>
+                  docker run --link mysql1  --rm -p 8080:8080  backend-curso
+                </p>
               </div>
             </div>
         </article>
