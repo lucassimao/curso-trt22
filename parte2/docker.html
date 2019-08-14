@@ -20,6 +20,8 @@
           <header>Container</header>
           <div class="console">
               <div class="consolebody">
+                <p>> mvn clean -DskipTests=true package</p>
+                <p>> mv target/trt22-backend-0.0.1-SNAPSHOT.jar target/demo-backend.jar</p>
                 <p>> docker run -d --name mysql1 -e MYSQL_DATABASE=teste -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123 -d mysql:8.0.16</p>
                 <p>
 
