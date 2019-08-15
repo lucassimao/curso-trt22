@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Parte 4 - Angular</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/curso.css" />
+    <link rel="stylesheet" href="../css/parte1-node.css" />
+    <link rel="stylesheet" href="../css/console.css" />
+
+    <link rel="stylesheet" href="../css/highlightjs/default.css" />
+    <script src="../js/highlight.pack.js"></script>
+  </head>
+  <body>
+    <h1 class="breadcrumb">Desenvolvimento WEB com Angular e SpringBoot / Angular</h1>
+
+    <main class="conteudo">
+          <article>
+            <header>Prática</header>
+            <div class="console">
+              <div class="consolebody">
+                <p>> ng new frontend </p>
+                <p>> cd frontend</p>
+                <p>> npm install --save @angular/material @angular/cdk @angular/animations </p>
+                <p>> ng g m material-ui --flat</p>
+                <p>> ng g m advogados</p>
+              </div>
+            </div>
+            <ul class="lista-nao-ordenada">
+                <li> <a target="_blank" href="../04/app/material-ui.module.ts">src/app/material-ui.module.ts</a> </li>
+              </ul>
+            <pre>
+              <code class="javascript">
+// src/app.module.ts 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { FormsModule } from "@angular/forms";
+import { MaterialUiModule } from "./material-ui.module";
+
+
+@NgModule({
+  ...
+  imports: [BrowserAnimationsModule]  
+  ...
+})
+export class AppModule { }                
+              </code>
+              </pre>
+              <pre>
+                  <code class="javascript">
+  // src/advogados.module.ts 
+  import { HttpClientModule } from "@angular/common/http";
+  import { FormsModule } from "@angular/forms";
+  import { MaterialUiModule } from "./material-ui.module";
+  
+  
+  @NgModule({
+    ...
+    imports: [
+      FormsModule,
+      HttpClientModule,
+      MaterialUiModule,  
+      BrowserAnimationsModule]  
+    ...
+  })
+  export class AdvogadosModule { }                
+                  </code>
+                  </pre>              
+              <p>src/style.css</p>
+              <pre>
+                <code class="css">
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+                </code>
+            </pre>
+            </article>         
+    </main>
+  </body>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</html>

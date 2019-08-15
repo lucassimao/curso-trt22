@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Parte 4 - Angular</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/curso.css" />
+    <link rel="stylesheet" href="../css/parte1-node.css" />
+    <link rel="stylesheet" href="../css/console.css" />
+
+    <link rel="stylesheet" href="../css/highlightjs/default.css" />
+    <script src="../js/highlight.pack.js"></script>
+  </head>
+  <body>
+    <h1 class="breadcrumb">Desenvolvimento WEB com Angular e SpringBoot / Angular</h1>
+
+    <main class="conteudo">
+          <article>
+            <header>Prática</header>
+            <div class="console">
+              <div class="consolebody">
+                <p>> ng g c advogados/cadastro </p>
+              </div>
+            </div>
+            <ul class="lista-nao-ordenada">
+                <li> <a target="_blank" href="../04/app/advogados/advogado.ts">app/advogados/advogado.ts</a> </li>
+                <li> <a target="_blank" href="../04/app/advogados/advogado.service.ts">app/advogados/advogado.service.ts</a> </li>
+                <li> <a target="_blank" href="../04/app/advogados/cadastro/cadastro.component.css">app/advogados/cadastro/cadastro.component.css</a> </li>
+                <li> <a target="_blank" href="../04/app/advogados/cadastro/cadastro.component.html">app/advogados/cadastro/cadastro.component.html</a> </li>
+                <li> <a target="_blank" href="../04/app/advogados/cadastro/cadastro.component.ts">app/advogados/cadastro/cadastro.component.ts</a> </li>
+                <li> <a target="_blank" href="../04/app/advogados/cadastro/datasource.tabela.ts">app/advogados/cadastro/datasource.tabela.ts</a> </li>
+                <li> <a target="_blank" href="../04/app/advogados/cadastro/resultado.paginado.ts">app/advogados/cadastro/resultado.paginado.ts</a> </li>
+              </ul>
+              <pre>
+                  <code class="javascript">
+// src/app/advogados/advogados-routing.module.ts
+
+import { CadastroComponent } from "./cadastro/cadastro.component";
+
+const routes: Routes = [
+  {
+    path: "",
+    component: CadastroComponent
+  }
+];             
+                  </code>
+                  </pre>
+            </article>         
+    </main>
+  </body>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</html>
