@@ -74,7 +74,248 @@ salvar(advogado: Advogado, processo: Processo): Observable<any> {
   }
               </code>
             </pre>
-            </article>         
+            </article>       
+            <article>
+              <header>Editar/Excluir</header>
+              <pre>
+                <code class="html">
+// src/app/processos/cadastro/cadastro.component.html
+&lt;ng-container matColumnDef="editar"&gt;
+  &lt;th mat-header-cell *matHeaderCellDef&gt;Editar&lt;/th&gt;
+  &lt;td mat-cell *matCellDef="let element"&gt;
+    &lt;button
+            matTooltip="Editar processo"
+      (click)="editar(element)"
+      aria-label="Editar"
+      mat-raised-button
+  &lt;th mat-header-cell *matHeaderCellDef&gt;Excluir&lt;/th&gt;
+  &lt;td mat-cell *matCellDef="let element"&gt;
+    &lt;button
+            matTooltip="Excluir processo"
+      (click)="excluir(element)"
+      aria-label="Excluir"
+      mat-raised-button
+    &lt;/button&gt;
+  &lt;/td&gt;
+&lt;/ng-container&gt;
+                </code>
+              </pre>
+              <pre><code class="javascript">
+//src/app/processos/cadastro/cadastro.component.ts                
+colunas = ["numero","descricao","editar","excluir"];
+
+editar(processo: Processo): void {
+   this.processo = { ... processo };
+ }
+
+ excluir(processo: Processo): void {
+   const msg = `Deseja realmente excluir ${processo.numero}?`;
+   const resposta = confirm(msg);
+   if (resposta) {
+     this.service
+       .excluir(processo)
+       .subscribe(
+         () => {
+           alert("Processo excluído com sucesso");
+           this.atualizarListaDeProcessos({
+             pageIndex: this.paginaAtual,
+             pageSize: this.tamanhoPagina
+           });
+         },
+         erro => {
+           console.log(erro);
+           alert(erro.message);
+         }
+       );
+   }
+ }
+              </code></pre>
+              <pre><code class="javascript">
+//src/app/processos/processo.service.ts
+excluir(processo: Processo): Observable<void> {
+   return this.http.delete<void>(processo._links.self.href);
+}                
+              </code></pre>
+            </article>  
+            <article> 
+              <header>Bugs</header>
+              <pre><code class="html">
+// src/app/advogados/cadastro/cadastro.component.html
+// src/app/processos/cadastro/cadastro.component.html
+// nos botões resetar e cancelar
+type="button"
+              </code></pre>
+              <pre><code class="javascript">
+///src/app/advogados/cadastro/cadastro.component.ts
+resetarFormulario(): void {
+if (this.formulario) {
+    this.formulario.resetForm();
+      this.advogado = { nome: "", email: "", oab: "", telefone: "" };
+  }
+}
+
+// src/app/processos/cadastro/cadastro.component.ts
+resetarFormulario(): void {
+  if (this.formulario) {
+    this.formulario.resetForm();
+    this.processo = {numero:"",descricao:""};
+  }
+}
+
+              </code></pre>
+            </article>
+
+            <article>
+              <header>
+                Filtrando tabela
+              </header>
+              <pre>
+                <code class="javascript">
+// src/app/material-ui.module.ts
+import { faSave, faTrashAlt, faEdit, faEraser, faBan, faInbox, faSearch } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faSave, faTrashAlt, faEdit, faEraser, faBan,faInbox,faSearch);
+</code>
+</pre>
+<pre>
+  <code class="css">
+/* src/app/processos/cadastro/cadastro.component.css */
+
+.filtro,
+.filtro > input + fa-icon{
+  margin-left: 10px;
+  cursor: pointer;
+}
+</code>
+</pre>
+
+<pre><code class="html">
+&lt;!-- src/app/processos/cadastro/cadastro.component.html --&gt;
+&lt;th mat-header-cell *matHeaderCellDef&gt;
+#Número
+&lt;span class="filtro"&gt;
+  &lt;fa-icon size="lg" *ngIf="!filtrarPorNumero" (click)="filtrarPorNumero=true" [icon]="['fa', 'search']"&gt;&lt;/fa-icon&gt;
+
+  &lt;input (keyup)="atualizarListaDeProcessos({})" *ngIf="filtrarPorNumero" [(ngModel)]="filtroNumero" type="text"&gt;
+  &lt;fa-icon size="lg" *ngIf="filtrarPorNumero" (click)="limparFiltroNumero()" [icon]="['fa', 'ban']"&gt;&lt;/fa-icon&gt;
+
+&lt;/span&gt;
+&lt;/th&gt;
+
+&lt;th mat-header-cell *matHeaderCellDef&gt;
+Descrição
+&lt;span class="filtro"&gt;
+    &lt;fa-icon (click)="filtrarPorDescricao=true"  *ngIf="!filtrarPorDescricao" size="lg" [icon]="['fa', 'search']"&gt;&lt;/fa-icon&gt;
+
+    &lt;input (keyup)="atualizarListaDeProcessos({})" *ngIf="filtrarPorDescricao" [(ngModel)]="filtroDescricao" type="text"&gt;
+    &lt;fa-icon size="lg" *ngIf="filtrarPorDescricao" (click)="limparFiltroPorDescricao()" [icon]="['fa', 'ban']"&gt;&lt;/fa-icon&gt;
+&lt;/span&gt;
+&lt;/th&gt;
+</code>
+</pre>
+
+<pre>
+  <code class="javascript">
+// src/app/processos/processo.service.ts
+
+listar(pagina: number, tamanhoPagina: number, advogado: Advogado, filtroNumero = '', filtroDescricao = ''): 
+    Observable<ResultadoPaginadoProcesso> {
+      let urlFinal = '';
+      let params = new HttpParams({fromObject : {page: String(pagina), 
+                          size: String(tamanhoPagina),
+                          advogado: advogado._links.self.href,
+                          sort: 'id,desc'}});
+      if (filtroNumero && filtroDescricao){
+        urlFinal = `${environment.backend}/processos/search/findByNumeroContainingAndDescricaoIgnoreCaseContainingAndAdvogado`;
+        params = params.append('numero',filtroNumero)
+              .append('descricao',filtroDescricao)
+      } else if (filtroNumero) {
+        urlFinal = `${environment.backend}/processos/search/findByNumeroContainingAndAdvogado`;
+        params =params.append('numero',filtroNumero);
+      } else if (filtroDescricao){
+        urlFinal = `${environment.backend}/processos/search/findByDescricaoIgnoreCaseContainingAndAdvogado`;
+        params = params.append('descricao',filtroDescricao);
+      } else {
+        urlFinal = advogado._links.processos.href;
+      }
+      return this.http.get<ResultadoPaginadoProcesso>(urlFinal,{params});
+}
+
+                </code>
+              </pre>
+              <pre><code class="javascript">
+// src/app/processos/cadastro/cadastro.component.ts
+
+filtroNumero: string;
+filtrarPorNumero = false;
+filtroDescricao: string;
+filtrarPorDescricao=false;
+
+limparFiltroNumero(): void{
+  this.filtrarPorNumero = false;  
+  this.filtroNumero ='';
+  this.atualizarListaDeProcessos({});
+}
+
+limparFiltroPorDescricao():void{
+  this.filtrarPorDescricao=false;
+  this.filtroDescricao='';
+  this.atualizarListaDeProcessos({});
+}                
+
+editar(processo: Processo): void {
+  this.limparFiltroNumero();
+  this.limparFiltroPorDescricao();
+  this.processo = { ... processo };
+}
+
+// corrigir chamada ao metodo listar
+this.service.listar(pagina, tamanhoPagina,this.advogado,this.filtroNumero,this.filtroDescricao)
+
+              </code></pre>
+              <pre><code class="java">
+// src/main/java/br/jus/trt22/trt22backend/repositorio/ProcessoRepository.java
+Page&lt;Processo&gt; findByNumeroContainingAndDescricaoIgnoreCaseContainingAndAdvogado(String numero,String descricao,Advogado advogado,Pageable pageable);
+Page&lt;Processo&gt; findByNumeroContainingAndAdvogado(String numero,Advogado advogado,Pageable pageable);
+Page&lt;Processo&gt; findByDescricaoIgnoreCaseContainingAndAdvogado(String descricao,Advogado advogado,Pageable pageable);
+
+              </code></pre>
+            </article>
+
+            <article>
+              <header>Aprimorando navegação</header>
+              <pre>
+                <code class="css">
+/* src/app/processos/cadastro/cadastro.component.css */
+h1 a {
+  text-decoration: none;
+}
+                </code>
+<pre>
+  <code class="html">
+&lt;!-- src/app/processos/cadastro/cadastro.component.html --&gt;
+&lt;h1&gt;
+&lt;a routerLink="/"&gt;Home &lt;/a&gt; &gt;&gt; Processos de {{advogado.nome}}
+&lt;/h1&gt;
+  </code>
+</pre>                
+              </pre>
+<pre>
+  <code class="javascript">
+// src/app/processos/cadastro/cadastro.component.ts
+constructor(private service: ProcessoService, public router: Router) {
+  const navigation = this.router.getCurrentNavigation();
+  if (navigation.extras.state){
+      this.advogado = <Advogado>navigation.extras.state.data;
+      this.atualizarListaDeProcessos({});
+  } else {
+    router.navigate(['/']);
+  }
+}    
+  </code>
+</pre>              
+            </article>
+
     </main>
   </body>
   <script>
