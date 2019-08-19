@@ -44,6 +44,36 @@
               <li><a target="_blank" href="../04/app/processos/cadastro/cadastro.component.html">app/processos/cadastro/cadastro.component.html</a></li>
               <li><a target="_blank" href="../04/app/processos/cadastro/cadastro.component.ts">app/processos/cadastro/cadastro.component.ts</a></li>
             </ul>
+
+            <pre>
+              <code class="javascript"> 
+// src/app/processos/processos.service.ts
+
+salvar(advogado: Advogado, processo: Processo): Observable<any> {
+
+    if ('_links' in processo && processo._links.self) {
+      return this.http.put<void>(
+        processo._links.self.href,
+        processo,
+        { observe: 'response' });
+    } else {
+      return this.http.post<void>(`${environment.backend}/processos`, processo, { observe: 'response' })
+        .pipe(flatMap(res => {
+          const { headers } = res;
+          return this.associarProcesso(advogado,headers.get('Location'));
+        }));
+
+    }
+  }
+
+  associarProcesso(advogado: Advogado, endpoint: string): Observable<any> {
+    const headers = new HttpHeaders({ 'content-type': 'text/uri-list' })
+    return this.http.put(endpoint + '/advogado',
+      advogado._links.self.href,
+      { headers, observe: 'response' });
+  }
+              </code>
+            </pre>
             </article>         
     </main>
   </body>
